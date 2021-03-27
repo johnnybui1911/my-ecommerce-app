@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, Text, FlatList, Image, StyleSheet} from 'react-native';
 import images from '../../assets/images';
 import colors from '../../constants/colors';
@@ -46,7 +46,7 @@ function groupCategoriesByColumn(categories = []) {
 
   return categoriesByColumn;
 }
-export default function CategoriesList() {
+function CategoriesList() {
   const _renderColumn = ({item, index}) => {
     return <View style={{}}>{_renderItem(item)}</View>;
   };
@@ -84,6 +84,8 @@ export default function CategoriesList() {
     />
   );
 }
+
+export default memo(CategoriesList);
 
 const styles = StyleSheet.create({
   container: {

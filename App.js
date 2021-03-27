@@ -10,12 +10,15 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import Banner from './src/components/Banner';
 import BannerContextProvider from './src/contexts/BannerContext';
+import DailyTabContextProvider from './src/contexts/DailyTabContext';
 import Home from './src/screens/Home';
 
 function App() {
   return (
     <BannerContextProvider>
-      <Home />
+      <DailyTabContextProvider>
+        <Home />
+      </DailyTabContextProvider>
       <Banner />
     </BannerContextProvider>
   );

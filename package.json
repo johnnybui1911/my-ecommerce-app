@@ -10,14 +10,24 @@
     "lint": "eslint .",
     "clean": "rm -rf ./node_modules",
     "ios-install": "cd ios && pod install && cd ..",
-    "mock": "json-server './src/mock/db.json' --routes './src/mock/routes.json' -m './src/mock/middlewares.js' --config json-server.json"
+    "mock": "json-server './src/mock/db.json' --routes './src/mock/routes.json' -m './src/mock/middlewares.js' --config json-server.json",
+    "run-ios": "npx react-native run-ios",
+    "run-ios-iPhone6": "npx react-native run-ios --simulator='iPhone 6'",
+    "run-android": "npx react-native run-android",
+    "android-shake": "adb shell input keyevent 82",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.14.1",
+    "add": "^2.0.6",
     "axios": "^0.21.1",
+    "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
-    "react-native-modal": "^11.7.0"
+    "react-native-modal": "^11.7.0",
+    "react-native-reanimated": "1.13.1",
+    "react-native-vector-icons": "^8.1.0",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "@babel/core": "^7.13.10",

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo, useEffect} from 'react';
 import {View, Text, Image, FlatList} from 'react-native';
 import images from '../../assets/images';
 import colors from '../../constants/colors';
@@ -25,7 +25,7 @@ const collections = [
     count: 58,
   },
 ];
-export default function FeaturedCollectionList() {
+function FeaturedCollectionList() {
   const _renderItem = ({item, index}) => (
     <View
       style={{
@@ -60,3 +60,5 @@ export default function FeaturedCollectionList() {
     />
   );
 }
+
+export default FeaturedCollectionList;

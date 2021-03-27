@@ -1,5 +1,6 @@
 // hello.js
 module.exports = (req, res, next) => {
   res.header('X-Hello', 'World');
-  next();
+
+  setTimeout(next, 1000);
 };
