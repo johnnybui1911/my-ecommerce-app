@@ -1,11 +1,11 @@
 import React, {memo} from 'react';
 import {View, Text, Image} from 'react-native';
-import images from '../../assets/images';
-import HorizontalFlatList from '../../components/HorizontalFlatList';
-import Section from '../../components/Section';
-import colors from '../../constants/colors';
-import {SCREEN_WIDTH} from '../../constants/sizes';
-import strings from '../../constants/strings';
+import images from '../../../assets/images';
+import HorizontalFlatList from '../../../components/HorizontalFlatList';
+import Section from '../../../components/Section';
+import colors from '../../../constants/colors';
+import {SCREEN_WIDTH} from '../../../constants/sizes';
+import strings from '../../../constants/strings';
 import DailyItem from './DailyItem';
 
 const searches = [

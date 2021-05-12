@@ -1,53 +1,27 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {
-  memo,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  Image,
-  TextInput,
-  RefreshControl,
-} from 'react-native';
+import {View, FlatList, TextInput, RefreshControl} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import images from '../../assets/images';
-import HorizontalFlatList from '../../components/HorizontalFlatList';
-import Section from '../../components/Section';
 import colors from '../../constants/colors';
-import {SCREEN_WIDTH, STATUS_BAR_HEIGHT} from '../../constants/sizes';
-import strings from '../../constants/strings';
 import {BannerContext} from '../../contexts/BannerContext';
 import useShowBanner from '../../hooks/useShowBanner';
-import CategoriesList from './CategoriesList';
-import DailyBanner from './DailyBanner';
-import DailyItem from './DailyItem';
-import FeaturedCollectionList from './FeaturedCollectionList';
 import Animated from 'react-native-reanimated';
 import apiRequest from '../../api';
-import MainListItem from './MainListItem';
-import Carousel from './Carousel';
-import ListHeader from './ListHeader';
-import ListFooter from './ListFooter';
-import VerticalListTabHeader from './VerticalListTabHeader';
+import MainListItem from './VerticalList/MainListItem';
+import ListHeader from './Header/ListHeader';
+import ListFooter from './Footer/ListFooter';
 import {DailyTabContext} from '../../contexts/DailyTabContext';
+import styles from './styles';
 
 const ITEM_HEIGHT = 223;
 
-const {
-  interpolate,
-  Value,
-  event,
-  interpolateColors,
-  Extrapolate,
-  call,
-} = Animated;
+const {interpolate, Value, event, interpolateColors} = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
@@ -78,6 +52,11 @@ function Home() {
   const headerIconColorAnimate = interpolateColors(scrollY, {
     inputRange: [0, 200 / 2],
     outputColorRange: [colors.white, colors.shopee_orange],
+  });
+
+  const headerInputBgColorAnimate = interpolateColors(scrollY, {
+    inputRange: [0, 200 / 2],
+    outputColorRange: [colors.white, colors.background_gray],
   });
 
   useEffect(() => {
@@ -169,31 +148,31 @@ function Home() {
     <View style={styles.container}>
       <Animated.View
         style={[
-          styles.headerContainer,
+          styles.headerAnimationContainer,
           {
             backgroundColor: headerBgColorAnimate,
             opacity: headerOpacityAnimate,
           },
         ]}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: colors.background_gray,
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
+        <Animated.View
+          style={[
+            styles.headerContainer,
+            {
+              backgroundColor: headerInputBgColorAnimate,
+            },
+          ]}>
           <View style={{paddingHorizontal: 16}}>
-            <Icon name="search" size={24} color={colors.black} />
+            <Icon name="search" size={24} color={colors.gray} />
           </View>
           <TextInput
-            style={{flex: 1}}
+            style={styles.headerInput}
             placeholder="Skip Hop: 20% OFF"
             placeholderTextColor={colors.shopee_orange}
           />
           <View style={{paddingHorizontal: 16}}>
-            <Icon name="camera" size={24} color={colors.black} />
+            <Icon name="camera" size={24} color={colors.gray} />
           </View>
-        </View>
+        </Animated.View>
         <View style={{paddingHorizontal: 16}}>
           <AnimatedIcon
             name="shopping-cart"
@@ -229,14 +208,8 @@ function Home() {
         keyExtractor={_keyExtractor}
         renderItem={_renderItem}
         numColumns={2}
-        contentContainerStyle={
-          {
-            // paddingHorizontal: 4,
-          }
-        }
-        columnWrapperStyle={{
-          justifyContent: 'center',
-        }}
+        columnWrapperStyle={styles.veritcalListColumnWrapper}
+        // style={{}}
         removeClippedSubviews
         initialNumToRender={5}
         maxToRenderPerBatch={10}
@@ -260,29 +233,3 @@ function Home() {
 }
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background_gray,
-  },
-  sectionContainer: {marginBottom: 16},
-  headerContainer: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: colors.white,
-    paddingLeft: 16,
-    paddingBottom: 16,
-    paddingTop: 16 + STATUS_BAR_HEIGHT + 16,
-    flexDirection: 'row',
-    zIndex: 1,
-    height: 130,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowRadius: 5,
-    shadowOpacity: 0.1,
-    alignItems: 'center',
-  },
-});

@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {View, Text, Image} from 'react-native';
-import images from '../../assets/images';
-import {SCREEN_WIDTH} from '../../constants/sizes';
+import images from '../../../assets/images';
+import {SCREEN_WIDTH} from '../../../constants/sizes';
 
 function Carousel() {
   console.log('Carousel is rendered');

@@ -15,6 +15,7 @@ export default function useShowBanner(onShowBanner) {
       });
       const {data} = res;
 
+      // Only store the banner if user close the banner, otherwise, this banner still can appear again
       if (data.length) {
         // retrieve storaged promotion hashMap
         const storagedBanners = await getData(STORAGE_BANNER_KEY);

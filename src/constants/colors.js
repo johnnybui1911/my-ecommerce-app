@@ -7,4 +7,5 @@ export default {
   border_gray: '#F2F2F2',
   black: '#000',
   header_transparent: 'rgba(0, 0, 0, 0)',
+  gray: '#767676',
 };

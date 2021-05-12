@@ -1,7 +1,7 @@
 import React, {memo, useEffect} from 'react';
 import {View, Text, Image, FlatList} from 'react-native';
-import images from '../../assets/images';
-import colors from '../../constants/colors';
+import images from '../../../assets/images';
+import colors from '../../../constants/colors';
 
 const collections = [
   {

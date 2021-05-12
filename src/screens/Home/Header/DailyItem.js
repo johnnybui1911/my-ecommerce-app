@@ -1,7 +1,7 @@
 import React, {memo} from 'react';
 import {View, Text, Image} from 'react-native';
-import images from '../../assets/images';
-import colors from '../../constants/colors';
+import images from '../../../assets/images';
+import colors from '../../../constants/colors';
 
 function DailyItem({item, index}) {
   return (

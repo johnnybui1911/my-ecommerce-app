@@ -6,60 +6,14 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
-import images from '../../assets/images';
-import Section from '../../components/Section';
-import colors from '../../constants/colors';
-import {SCREEN_WIDTH} from '../../constants/sizes';
-import strings from '../../constants/strings';
-import {DailyTabContext} from '../../contexts/DailyTabContext';
-import {storeCoordinates, tabCoordinates} from './coordinates';
-
-const CATEGORIES = [
-  {
-    id: '1',
-    name: 'Home & Living',
-  },
-  {
-    id: '2',
-    name: 'Home Appliances',
-  },
-  {
-    id: '3',
-    name: 'Beauty',
-  },
-  {
-    id: '4',
-    name: 'Home & Living',
-  },
-  {
-    id: '5',
-    name: 'Home Appliances',
-  },
-  {
-    id: '6',
-    name: 'Beauty',
-  },
-  {
-    id: '7',
-    name: 'Home Appliances',
-  },
-  {
-    id: '8',
-    name: 'Beauty',
-  },
-  {
-    id: '9',
-    name: 'Home & Living',
-  },
-  {
-    id: '10',
-    name: 'Home Appliances',
-  },
-  {
-    id: '11',
-    name: 'Beauty',
-  },
-];
+import images from '../../../assets/images';
+import Section from '../../../components/Section';
+import colors from '../../../constants/colors';
+import {VERTICAL_LIST_TAB_HEADERS} from '../../../constants/configs';
+import {SCREEN_WIDTH} from '../../../constants/sizes';
+import strings from '../../../constants/strings';
+import {DailyTabContext} from '../../../contexts/DailyTabContext';
+import {storeCoordinates, tabCoordinates} from '../coordinates';
 
 function areEqual(prevProps, nextProps) {
   // minimize the item component re-rendering - at most 2 item is re-rendered
@@ -130,15 +84,7 @@ function VerticalListTabHeader() {
           const {nativeEvent} = event;
           console.log('scrollview', nativeEvent);
         }}>
-        {CATEGORIES.map((item, idx) => (
-          // <VerticalListTabHeaderItem
-          //   key={idx}
-          //   item={item}
-          //   idx={idx}
-          //   setTab={setTab}
-          //   tab={tab}
-          // />
-
+        {VERTICAL_LIST_TAB_HEADERS.map((item, idx) => (
           <TouchableWithoutFeedback
             key={`${idx}_${item.name}`}
             onPress={() => {
@@ -146,10 +92,6 @@ function VerticalListTabHeader() {
               if (tabCoordinates.hasOwnProperty(item.id)) {
                 const coord = tabCoordinates[item.id];
                 const scrollToX = coord.x - Math.floor(SCREEN_WIDTH / 3);
-                // console.log({
-                //   x: coord.x,
-                //   scrollToX,
-                // });
                 scrollViewRef.current.scrollTo({
                   x: scrollToX,
                   animated: true,
@@ -179,7 +121,7 @@ function VerticalListTabHeader() {
                   tab === item.id ? colors.shopee_orange : colors.white,
               }}>
               <Image source={images.shirt} />
-              <Text style={{fontSize: 8, textAlign: 'center'}}>
+              <Text style={{fontSize: 12, textAlign: 'center'}}>
                 {item.name}
               </Text>
             </View>
