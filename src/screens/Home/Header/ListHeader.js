@@ -3,17 +3,18 @@ import {View, Text, Image} from 'react-native';
 import images from '../../../assets/images';
 import Section from '../../../components/Section';
 import strings from '../../../constants/strings';
-import Carousel from './Carousel';
+import HomeCarousel from './HomeCarousel';
 import DailyBanner from './DailyBanner';
 import FeaturedCollectionList from './FeaturedCollectionList';
 import VerticalListTabHeader from './VerticalListTabHeader';
 import styles from '../styles';
 import {TRENDING_SEARCH} from '../../../constants/configs';
+import CategoriesList from './CategoriesList';
 
 function ListHeader() {
   return (
     <View>
-      <Carousel />
+      <HomeCarousel />
       <DailyBanner />
       <Section title={strings.home.sections.flashDeals}>
         <FeaturedCollectionList />
@@ -32,6 +33,9 @@ function ListHeader() {
       </Section>
       <Section title={strings.home.sections.featuredCollection}>
         <FeaturedCollectionList />
+      </Section>
+      <Section title={strings.home.sections.categories}>
+        <CategoriesList />
       </Section>
       <VerticalListTabHeader />
     </View>

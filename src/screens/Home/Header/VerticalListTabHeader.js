@@ -1,4 +1,4 @@
-import React, {memo, useContext, useRef} from 'react';
+import React, {memo, useContext, useRef, useMemo} from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
+import {useCallback} from 'react/cjs/react.development';
 import images from '../../../assets/images';
 import Section from '../../../components/Section';
 import colors from '../../../constants/colors';
@@ -13,7 +14,8 @@ import {VERTICAL_LIST_TAB_HEADERS} from '../../../constants/configs';
 import {SCREEN_WIDTH} from '../../../constants/sizes';
 import strings from '../../../constants/strings';
 import {DailyTabContext} from '../../../contexts/DailyTabContext';
-import {storeCoordinates, tabCoordinates} from '../coordinates';
+import {tabCoordinates} from '../coordinates';
+import styles from '../styles';
 
 function areEqual(prevProps, nextProps) {
   // minimize the item component re-rendering - at most 2 item is re-rendered
@@ -35,43 +37,53 @@ const VerticalListTabHeaderItem = memo(function VerticalListTabHeaderItem({
   idx,
   tab,
   setTab,
+  onPress,
 }) {
-  console.log('VerticalListTabHeaderItem is rendered');
+  const tabStyle = useMemo(
+    () => ({
+      marginLeft: idx === 0 ? 4 : 0,
+      borderColor: tab === item.id ? colors.shopee_orange : colors.white,
+    }),
+    [idx, tab, item],
+  );
+
   return (
-    <TouchableWithoutFeedback
-      key={`${idx}_${item.name}`}
-      onPress={() => {
-        setTab && setTab(item.id);
-      }}>
-      <View
-        style={{
-          paddingHorizontal: 16,
-          paddingVertical: 8,
-          backgroundColor: colors.white,
-          marginVertical: 4,
-          width: 100,
-          height: 120,
-          marginRight: 4,
-          marginLeft: idx === 0 ? 4 : 0,
-          alignItems: 'center',
-          borderWidth: 1,
-          borderColor: tab === item.id ? colors.shopee_orange : colors.white,
-        }}>
+    <TouchableWithoutFeedback onPress={onPress}>
+      <View style={[tabStyle, styles.tabItem]}>
         <Image source={images.shirt} />
-        <Text style={{fontSize: 8, textAlign: 'center'}}>{item.name}</Text>
+        <Text style={{fontSize: 12, textAlign: 'center'}}>{item.name}</Text>
       </View>
     </TouchableWithoutFeedback>
   );
 },
 areEqual);
 
-const TAB_WIDTH = (100 + 4) * 600 + 4;
-
+// Use Context to pass data through deep-nested component without having to pass props down at every level
+// -> avoid unneccessary re-rendering of ListHeader with multiple horizontal lists
+// -> only re-render products vertical list tab and product vertical list
+// -> need to define context outside of Home screen because if other states are updated -> that context is re-executed -> make VerticalListTabHeader re-render
 function VerticalListTabHeader() {
   console.log('VerticalListTabHeader is rendered');
   const scrollViewRef = useRef(null);
   const context = useContext(DailyTabContext);
   const {tab, setTab} = context;
+
+  // closure: avoid inline function definition
+  const _onTabPress = useCallback(
+    (id) => (e) => {
+      setTab && setTab(id);
+      if (tabCoordinates.hasOwnProperty(id)) {
+        const coord = tabCoordinates[id];
+        const offset = Math.floor(SCREEN_WIDTH / 3);
+        const scrollToX = coord.x - offset; // scroll horizontal list to always keep focused tab on viewport
+        scrollViewRef.current.scrollTo({
+          x: scrollToX,
+          animated: true,
+        });
+      }
+    },
+    [setTab],
+  );
 
   return (
     <Section title={strings.home.sections.dailyDiscover}>
@@ -79,53 +91,13 @@ function VerticalListTabHeader() {
         ref={scrollViewRef}
         horizontal
         showsHorizontalScrollIndicator={false}
-        style={{backgroundColor: colors.border_gray}}
-        onLayout={(event) => {
-          const {nativeEvent} = event;
-          console.log('scrollview', nativeEvent);
-        }}>
+        style={{backgroundColor: colors.border_gray}}>
         {VERTICAL_LIST_TAB_HEADERS.map((item, idx) => (
-          <TouchableWithoutFeedback
+          <VerticalListTabHeaderItem
             key={`${idx}_${item.name}`}
-            onPress={() => {
-              setTab && setTab(item.id);
-              if (tabCoordinates.hasOwnProperty(item.id)) {
-                const coord = tabCoordinates[item.id];
-                const scrollToX = coord.x - Math.floor(SCREEN_WIDTH / 3);
-                scrollViewRef.current.scrollTo({
-                  x: scrollToX,
-                  animated: true,
-                });
-              }
-            }}
-            onLayout={(event) => {
-              const {
-                nativeEvent: {
-                  layout: {x, y},
-                },
-              } = event;
-              storeCoordinates(item.id, {x, y});
-            }}>
-            <View
-              style={{
-                paddingVertical: 8,
-                backgroundColor: colors.white,
-                marginVertical: 4,
-                width: 100,
-                height: 120,
-                marginRight: 4,
-                marginLeft: idx === 0 ? 4 : 0,
-                alignItems: 'center',
-                borderWidth: 1,
-                borderColor:
-                  tab === item.id ? colors.shopee_orange : colors.white,
-              }}>
-              <Image source={images.shirt} />
-              <Text style={{fontSize: 12, textAlign: 'center'}}>
-                {item.name}
-              </Text>
-            </View>
-          </TouchableWithoutFeedback>
+            {...{item, idx, tab, setTab}}
+            onPress={_onTabPress(item.id)}
+          />
         ))}
       </ScrollView>
     </Section>

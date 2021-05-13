@@ -5,35 +5,22 @@
  * @format
  * @flow strict-local
  */
-
+import 'react-native-gesture-handler';
 import React from 'react';
-import {StyleSheet} from 'react-native';
 import Banner from './src/components/Banner';
-import BannerContextProvider from './src/contexts/BannerContext';
 import DailyTabContextProvider from './src/contexts/DailyTabContext';
-import Home from './src/screens/Home';
+import {NavigationContainer} from '@react-navigation/native';
+import RootStackNavigator from './src/navigators';
 
 function App() {
   return (
-    <BannerContextProvider>
-      <DailyTabContextProvider>
-        <Home />
-      </DailyTabContextProvider>
+    <DailyTabContextProvider>
+      <NavigationContainer>
+        <RootStackNavigator />
+      </NavigationContainer>
       <Banner />
-    </BannerContextProvider>
+    </DailyTabContextProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  child: {
-    backgroundColor: 'red',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-});
 
 export default App;

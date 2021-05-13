@@ -26,11 +26,11 @@ const STATUS_BAR_HEIGHT = getStatusBarHeight();
 
 const DEFAULT_SPACE = 8;
 
-const space = {
+const sizes = {
   small: DEFAULT_SPACE,
   medium: DEFAULT_SPACE * 2,
   large: DEFAULT_SPACE * 3,
   xLarge: DEFAULT_SPACE * 4,
 };
 
-export {SCREEN_WIDTH, SCREEN_HEIGHT, STATUS_BAR_HEIGHT, space};
+export {SCREEN_WIDTH, SCREEN_HEIGHT, STATUS_BAR_HEIGHT, sizes};

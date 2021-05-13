@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {
+  createContext,
   useCallback,
   useContext,
   useEffect,
@@ -9,15 +10,13 @@ import React, {
 import {View, FlatList, TextInput, RefreshControl} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../constants/colors';
-import {BannerContext} from '../../contexts/BannerContext';
-import useShowBanner from '../../hooks/useShowBanner';
 import Animated from 'react-native-reanimated';
 import apiRequest from '../../api';
 import MainListItem from './VerticalList/MainListItem';
 import ListHeader from './Header/ListHeader';
 import ListFooter from './Footer/ListFooter';
-import {DailyTabContext} from '../../contexts/DailyTabContext';
 import styles from './styles';
+import {DailyTabContext} from '../../contexts/DailyTabContext';
 
 const ITEM_HEIGHT = 223;
 
@@ -25,9 +24,7 @@ const {interpolate, Value, event, interpolateColors} = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
-function Home() {
-  const bannerContext = useContext(BannerContext);
-  const {setModalVisible, setBanner} = bannerContext;
+function HomeScreen() {
   const tabContext = useContext(DailyTabContext);
   const {tab} = tabContext;
 
@@ -65,6 +62,8 @@ function Home() {
   }, [fetchProducts, tab]);
 
   const fetchProducts = useCallback(async (category) => {
+    // await removeData(STORAGE_BANNER_KEY);
+
     setLoading(true);
 
     const url = category
@@ -77,7 +76,7 @@ function Home() {
       });
       setProducts(data);
     } catch (e) {
-      console.log({e});
+      //
     }
 
     setLoading(false);
@@ -122,13 +121,6 @@ function Home() {
       setLoading(false);
     }
   }, [page, tab]);
-
-  const onShowBanner = (banner) => {
-    setModalVisible(true);
-    setBanner(banner);
-  };
-
-  useShowBanner(onShowBanner);
 
   const _renderItem = useCallback(({item, index}) => {
     return <MainListItem {...{item, index}} />;
@@ -232,4 +224,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeScreen;

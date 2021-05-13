@@ -44,6 +44,35 @@ export const VERTICAL_LIST_TAB_HEADERS = [
   },
   {
     id: '6',
-    name: 'Comics',
+    name: 'Beauty',
   },
 ];
+
+export const CATEGORIES = [
+  {
+    id: 1,
+    name: "Men's Wear",
+  },
+  {
+    id: 2,
+    name: "Women's Apparel",
+  },
+  {
+    id: 3,
+    name: 'Mobile & Gadgets',
+  },
+  {
+    id: 4,
+    name: 'Home Appliances',
+  },
+  {
+    id: 5,
+    name: 'Toys',
+  },
+  {
+    id: 6,
+    name: 'Kids Fashion',
+  },
+];
+
+export const STORAGE_BANNER_KEY = 'banners';

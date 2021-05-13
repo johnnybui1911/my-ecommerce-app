@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
-import {SCREEN_WIDTH, space, STATUS_BAR_HEIGHT} from '../../constants/sizes';
+import {SCREEN_WIDTH, sizes, STATUS_BAR_HEIGHT} from '../../constants/sizes';
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   headerAnimationContainer: {
     ...StyleSheet.absoluteFill,
     backgroundColor: colors.white,
-    paddingLeft: space.medium,
+    paddingLeft: sizes.medium,
     flexDirection: 'row',
     zIndex: 1,
     height: 40 + STATUS_BAR_HEIGHT + 16 * 2,
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   fourItemStyle: {
-    width: Math.floor(SCREEN_WIDTH / 2 - space.medium),
-    padding: space.medium,
+    width: Math.floor(SCREEN_WIDTH / 2 - sizes.medium),
+    padding: sizes.medium,
   },
   fourItemText: {flex: 1},
   veritcalListColumnWrapper: {
@@ -48,13 +48,24 @@ const styles = StyleSheet.create({
   },
   verticalListItem: {
     backgroundColor: colors.white,
-    width: SCREEN_WIDTH / 2 - space.small,
+    width: SCREEN_WIDTH / 2 - sizes.small,
   },
   verticalListImage: {
-    width: SCREEN_WIDTH / 2 - space.small,
-    height: SCREEN_WIDTH / 2 - space.small,
+    width: SCREEN_WIDTH / 2 - sizes.small,
+    height: SCREEN_WIDTH / 2 - sizes.small,
   },
-  verticalListContent: {padding: space.small},
+  verticalListContent: {padding: sizes.small},
+  tabItem: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: colors.white,
+    marginVertical: 4,
+    width: 100,
+    height: 120,
+    marginRight: 4,
+    alignItems: 'center',
+    borderWidth: 1,
+  },
 });
 
 export default styles;
