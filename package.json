@@ -13,6 +13,7 @@
     "mock": "json-server './src/mock/db.json' --routes './src/mock/routes.json' -m './src/mock/middlewares.js' --config json-server.json",
     "run-ios": "npx react-native run-ios",
     "run-ios-iPhone6": "npx react-native run-ios --simulator='iPhone 6'",
+    "run-ios-iPhone11": "npx react-native run-ios --simulator='iPhone 11'",
     "run-android": "npx react-native run-android",
     "android-shake": "adb shell input keyevent 82",
     "ngrok": "ngrok http 3000"

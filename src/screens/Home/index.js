@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import {View, FlatList, TextInput, RefreshControl} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../constants/colors';
 import Animated from 'react-native-reanimated';
@@ -25,6 +26,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 function HomeScreen() {
+  const insets = useSafeAreaInsets();
   const tabContext = useContext(DailyTabContext);
   const {tab} = tabContext;
 
@@ -136,6 +138,8 @@ function HomeScreen() {
 
   const _keyExtractor = useCallback((item, idx) => idx.toString(), []);
 
+  console.log({top: insets.top});
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -144,6 +148,9 @@ function HomeScreen() {
           {
             backgroundColor: headerBgColorAnimate,
             opacity: headerOpacityAnimate,
+          },
+          {
+            paddingTop: Math.max(insets.top, 16),
           },
         ]}>
         <Animated.View

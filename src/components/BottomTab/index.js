@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, TouchableOpacity, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../constants/colors';
+import {BOTTOM_TAB_HEIGHT} from '../../constants/sizes';
 
 const ICONS = {
   home: 'home',
@@ -76,11 +77,15 @@ function BottomTab({state, descriptors, navigation}) {
 export default BottomTab;
 
 const styles = StyleSheet.create({
-  tabBar: {flexDirection: 'row', height: 60, alignItems: 'center'},
+  tabBar: {
+    flexDirection: 'row',
+    height: BOTTOM_TAB_HEIGHT,
+    alignItems: 'center',
+  },
   tab: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%',
+    height: BOTTOM_TAB_HEIGHT,
   },
 });
