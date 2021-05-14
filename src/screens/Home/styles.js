@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
   verticalListItem: {
     backgroundColor: colors.white,
     width: WINDOW_WIDTH / 2 - sizes.small,
+    height: WINDOW_WIDTH / 2 - sizes.small,
   },
   verticalListImage: {
     width: WINDOW_WIDTH / 2 - sizes.small,

@@ -58,7 +58,7 @@ const sizes = {
   xLarge: DEFAULT_SPACE * 4,
 };
 
-const PRODUCT_ITEM_HEIGHT = 223;
+const PRODUCT_ITEM_SIZE = WINDOW_WIDTH / 2 - sizes.small;
 
 export {
   WINDOW_SCREEN,
@@ -67,6 +67,6 @@ export {
   WINDOW_HEIGHT,
   STATUS_BAR_HEIGHT,
   BOTTOM_TAB_HEIGHT,
-  PRODUCT_ITEM_HEIGHT,
+  PRODUCT_ITEM_SIZE,
   sizes,
 };

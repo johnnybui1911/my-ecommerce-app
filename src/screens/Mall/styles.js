@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
-import {sizes, WINDOW_WIDTH} from '../../constants/sizes';
+import {PRODUCT_ITEM_SIZE, sizes, WINDOW_WIDTH} from '../../constants/sizes';
 
 export default StyleSheet.create({
   container: {flex: 1, backgroundColor: colors.background_gray},
@@ -25,7 +25,7 @@ export default StyleSheet.create({
   },
   verticalListImage: {
     width: WINDOW_WIDTH / 2 - sizes.small,
-    height: WINDOW_WIDTH / 2 - sizes.small,
+    height: PRODUCT_ITEM_SIZE,
   },
   verticalListContent: {padding: sizes.small},
   verticalListContainer: {

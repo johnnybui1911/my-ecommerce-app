@@ -1,4 +1,4 @@
-import React, {memo, useContext, useRef, useMemo} from 'react';
+import React, {memo, useContext, useRef, useMemo, useCallback} from 'react';
 import {
   View,
   Text,
@@ -6,7 +6,6 @@ import {
   TouchableWithoutFeedback,
   Image,
 } from 'react-native';
-import {useCallback} from 'react/cjs/react.development';
 import images from '../../../assets/images';
 import Section from '../../../components/Section';
 import colors from '../../../constants/colors';
@@ -36,7 +35,6 @@ const VerticalListTabHeaderItem = memo(function VerticalListTabHeaderItem({
   item,
   idx,
   tab,
-  setTab,
   onPress,
 }) {
   const tabStyle = useMemo(
@@ -72,15 +70,14 @@ areEqual);
 // -> only re-render products vertical list tab and product vertical list
 // -> need to define context outside of Home screen because if other states are updated -> that context is re-executed -> make VerticalListTabHeader re-render
 function VerticalListTabHeader() {
-  console.log('VerticalListTabHeader is rendered');
   const scrollViewRef = useRef(null);
   const context = useContext(DailyTabContext);
   const {tab, setTab} = context;
 
   // closure: avoid inline function definition
   const _onTabPress = useCallback(
-    (id) => (e) => {
-      setTab && setTab(id);
+    (id) => () => {
+      setTab(id);
       if (tabCoordinates.hasOwnProperty(id)) {
         const coord = tabCoordinates[id];
         const offset = Math.floor(WINDOW_WIDTH / 3);
@@ -104,7 +101,9 @@ function VerticalListTabHeader() {
         {VERTICAL_LIST_TAB_HEADERS.map((item, idx) => (
           <VerticalListTabHeaderItem
             key={`${idx}_${item.name}`}
-            {...{item, idx, tab, setTab}}
+            item={item}
+            idx={idx}
+            tab={tab}
             onPress={_onTabPress(item.id)}
           />
         ))}

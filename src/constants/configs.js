@@ -76,3 +76,11 @@ export const CATEGORIES = [
 ];
 
 export const STORAGE_BANNER_KEY = 'banners';
+
+export const SHOPPING_MALL_TAB = [
+  {key: 'category1', title: 'First', categoryId: 0},
+  {key: 'category2', title: 'Second', categoryId: 1},
+  {key: 'category3', title: 'First', categoryId: 2},
+  {key: 'category4', title: 'Second', categoryId: 3},
+  {key: 'category5', title: 'First', categoryId: 4},
+];

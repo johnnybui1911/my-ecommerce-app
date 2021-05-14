@@ -13,8 +13,8 @@ import ListHeader from './Header/ListHeader';
 import ListFooter from './Footer/ListFooter';
 import styles from './styles';
 import {DailyTabContext} from '../../contexts/DailyTabContext';
-import {PRODUCT_ITEM_HEIGHT} from '../../constants/sizes';
-import PlaceholderList from '../../components/PlaceholderList.js';
+import {PRODUCT_ITEM_SIZE} from '../../constants/sizes';
+import PlaceholderList from '../../components/PlaceholderList';
 import AnimatedScreenHeader from './AnimatedScreenHeader';
 
 const {Value, event} = Animated;
@@ -43,8 +43,8 @@ function HomeScreen() {
     setProducts([]);
 
     const url = category
-      ? `/products?_start=0&_end=10&category=${category}`
-      : '/products?_start=0&_end=10';
+      ? `/products?_start=0&_end=4&category=${category}`
+      : '/products?_start=0&_end=4';
 
     try {
       const {data} = await apiRequest({
@@ -76,8 +76,8 @@ function HomeScreen() {
       onEndReachedCalledDuringMomentum.current = true;
       setLoading(true);
 
-      const start = page * 10;
-      const end = (page + 1) * 10;
+      const start = page * 4;
+      const end = (page + 1) * 4;
 
       const url = tab
         ? `/products?_start=${start}&_end=${end}&category=${tab}`
@@ -139,12 +139,12 @@ function HomeScreen() {
         numColumns={2}
         columnWrapperStyle={styles.veritcalListColumnWrapper}
         removeClippedSubviews
-        initialNumToRender={5}
-        maxToRenderPerBatch={10}
+        initialNumToRender={10}
+        maxToRenderPerBatch={20}
         updateCellsBatchingPeriod={50}
         getItemLayout={(item, index) => ({
-          length: PRODUCT_ITEM_HEIGHT,
-          offset: PRODUCT_ITEM_HEIGHT * index,
+          length: PRODUCT_ITEM_SIZE,
+          offset: PRODUCT_ITEM_SIZE * index,
           index,
         })}
         refreshControl={

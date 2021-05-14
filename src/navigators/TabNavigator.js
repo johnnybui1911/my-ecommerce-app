@@ -6,7 +6,7 @@ import MallScreen from '../screens/Mall';
 
 const Tab = createBottomTabNavigator();
 
-function BottomTabNavigator() {
+function TabNavigator() {
   return (
     <Tab.Navigator tabBar={(props) => <BottomTab {...props} />}>
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -15,4 +15,4 @@ function BottomTabNavigator() {
   );
 }
 
-export default BottomTabNavigator;
+export default TabNavigator;

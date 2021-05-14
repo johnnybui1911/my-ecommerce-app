@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {View, StyleSheet, TextInput} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import colors from '../../constants/colors';
 import {sizes, STATUS_BAR_HEIGHT} from '../../constants/sizes';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Header({inputProps}) {
+function Header({inputProps}) {
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -50,6 +50,8 @@ export default function Header({inputProps}) {
     </View>
   );
 }
+
+export default memo(Header);
 
 const styles = StyleSheet.create({
   headerAnimationContainer: {

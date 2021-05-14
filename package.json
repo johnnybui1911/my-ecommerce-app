@@ -12,9 +12,11 @@
     "ios-install": "cd ios && pod install && cd ..",
     "mock": "json-server './src/mock/db.json' --routes './src/mock/routes.json' -m './src/mock/middlewares.js' --config json-server.json",
     "run-ios": "npx react-native run-ios",
+    "run-ios-release": "npx react-native run-ios --configuration Release",
     "run-ios-iPhone6": "npx react-native run-ios --simulator='iPhone 6'",
     "run-ios-iPhone11": "npx react-native run-ios --simulator='iPhone 11'",
     "run-android": "npx react-native run-android",
+    "run-android-release": "npx react-native run-android --variant release",
     "android-shake": "adb shell input keyevent 82",
     "ngrok": "ngrok http 3000"
   },
@@ -29,6 +31,7 @@
     "prop-types": "^15.7.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-modal": "^11.7.0",
     "react-native-pager-view": "^5.1.7",
@@ -38,6 +41,7 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-tab-view": "^3.0.1",
     "react-native-vector-icons": "^8.1.0",
+    "recyclerlistview": "^3.0.5",
     "yarn": "^1.22.10"
   },
   "devDependencies": {
