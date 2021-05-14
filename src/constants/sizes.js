@@ -1,6 +1,6 @@
 import {Dimensions, Platform, StatusBar} from 'react-native';
 
-const SCREEN_WIDTH = Dimensions.get('screen').width;
+const WINDOW_SCREEN = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
@@ -58,10 +58,15 @@ const sizes = {
   xLarge: DEFAULT_SPACE * 4,
 };
 
+const PRODUCT_ITEM_HEIGHT = 223;
+
 export {
-  SCREEN_WIDTH,
+  WINDOW_SCREEN,
   SCREEN_HEIGHT,
+  WINDOW_WIDTH,
+  WINDOW_HEIGHT,
   STATUS_BAR_HEIGHT,
   BOTTOM_TAB_HEIGHT,
+  PRODUCT_ITEM_HEIGHT,
   sizes,
 };

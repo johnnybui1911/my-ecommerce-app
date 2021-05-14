@@ -1,16 +1,11 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {
-  createContext,
   useCallback,
   useContext,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import {View, FlatList, TextInput, RefreshControl} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import colors from '../../constants/colors';
+import {View, FlatList, RefreshControl} from 'react-native';
 import Animated from 'react-native-reanimated';
 import apiRequest from '../../api';
 import MainListItem from './VerticalList/MainListItem';
@@ -18,55 +13,34 @@ import ListHeader from './Header/ListHeader';
 import ListFooter from './Footer/ListFooter';
 import styles from './styles';
 import {DailyTabContext} from '../../contexts/DailyTabContext';
+import {PRODUCT_ITEM_HEIGHT} from '../../constants/sizes';
+import PlaceholderList from '../../components/PlaceholderList.js';
+import AnimatedScreenHeader from './AnimatedScreenHeader';
 
-const ITEM_HEIGHT = 223;
-
-const {interpolate, Value, event, interpolateColors} = Animated;
+const {Value, event} = Animated;
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
-const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 function HomeScreen() {
-  const insets = useSafeAreaInsets();
   const tabContext = useContext(DailyTabContext);
   const {tab} = tabContext;
 
   const [products, setProducts] = useState([]);
   const [isRefresh, setRefresh] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const onEndReachedCalledDuringMomentum = useRef(true);
 
   const scrollY = useRef(new Value(0)).current;
 
-  const headerOpacityAnimate = interpolate(scrollY, {
-    inputRange: [-20, 0],
-    outputRange: [0, 1],
-  });
-
-  const headerBgColorAnimate = interpolateColors(scrollY, {
-    inputRange: [0, 200 / 2],
-    outputColorRange: [colors.header_transparent, colors.white],
-  });
-
-  const headerIconColorAnimate = interpolateColors(scrollY, {
-    inputRange: [0, 200 / 2],
-    outputColorRange: [colors.white, colors.shopee_orange],
-  });
-
-  const headerInputBgColorAnimate = interpolateColors(scrollY, {
-    inputRange: [0, 200 / 2],
-    outputColorRange: [colors.white, colors.background_gray],
-  });
-
   useEffect(() => {
-    setPage(1);
     fetchProducts(tab);
   }, [fetchProducts, tab]);
 
   const fetchProducts = useCallback(async (category) => {
     // await removeData(STORAGE_BANNER_KEY);
-
     setLoading(true);
+    setPage(1);
+    setProducts([]);
 
     const url = category
       ? `/products?_start=0&_end=10&category=${category}`
@@ -133,64 +107,20 @@ function HomeScreen() {
   }, []);
 
   const _renderFooter = useCallback(() => {
-    return isLoading && <ListFooter />;
-  }, [isLoading]);
+    if (page === 1 && isLoading && products.length === 0) {
+      return <PlaceholderList />;
+    } else if (isLoading && products.length > 0) {
+      return <ListFooter />;
+    } else {
+      return null;
+    }
+  }, [isLoading, page, products]);
 
   const _keyExtractor = useCallback((item, idx) => idx.toString(), []);
 
-  console.log({top: insets.top});
-
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.headerAnimationContainer,
-          {
-            backgroundColor: headerBgColorAnimate,
-            opacity: headerOpacityAnimate,
-          },
-          {
-            paddingTop: Math.max(insets.top, 16),
-          },
-        ]}>
-        <Animated.View
-          style={[
-            styles.headerContainer,
-            {
-              backgroundColor: headerInputBgColorAnimate,
-            },
-          ]}>
-          <View style={{paddingHorizontal: 16}}>
-            <Icon name="search" size={24} color={colors.gray} />
-          </View>
-          <TextInput
-            style={styles.headerInput}
-            placeholder="Skip Hop: 20% OFF"
-            placeholderTextColor={colors.shopee_orange}
-          />
-          <View style={{paddingHorizontal: 16}}>
-            <Icon name="camera" size={24} color={colors.gray} />
-          </View>
-        </Animated.View>
-        <View style={{paddingHorizontal: 16}}>
-          <AnimatedIcon
-            name="shopping-cart"
-            size={30}
-            style={{
-              color: headerIconColorAnimate,
-            }}
-          />
-        </View>
-        <View style={{paddingHorizontal: 16}}>
-          <AnimatedIcon
-            name="comments"
-            size={30}
-            style={{
-              color: headerIconColorAnimate,
-            }}
-          />
-        </View>
-      </Animated.View>
+      <AnimatedScreenHeader {...{scrollY}} />
       <AnimatedFlatList
         onScroll={event([
           {
@@ -208,14 +138,13 @@ function HomeScreen() {
         renderItem={_renderItem}
         numColumns={2}
         columnWrapperStyle={styles.veritcalListColumnWrapper}
-        // style={{}}
         removeClippedSubviews
         initialNumToRender={5}
         maxToRenderPerBatch={10}
         updateCellsBatchingPeriod={50}
         getItemLayout={(item, index) => ({
-          length: ITEM_HEIGHT,
-          offset: ITEM_HEIGHT * index,
+          length: PRODUCT_ITEM_HEIGHT,
+          offset: PRODUCT_ITEM_HEIGHT * index,
           index,
         })}
         refreshControl={
@@ -226,6 +155,7 @@ function HomeScreen() {
         onMomentumScrollBegin={() => {
           onEndReachedCalledDuringMomentum.current = false;
         }}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import colors from '../../constants/colors';
-import {SCREEN_WIDTH, sizes, STATUS_BAR_HEIGHT} from '../../constants/sizes';
+import {WINDOW_WIDTH, sizes, STATUS_BAR_HEIGHT} from '../../constants/sizes';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   fourItemStyle: {
-    width: Math.floor(SCREEN_WIDTH / 2 - sizes.medium),
+    width: Math.floor(WINDOW_WIDTH / 2 - sizes.medium),
     padding: sizes.medium,
   },
   fourItemText: {flex: 1},
@@ -48,11 +48,11 @@ const styles = StyleSheet.create({
   },
   verticalListItem: {
     backgroundColor: colors.white,
-    width: SCREEN_WIDTH / 2 - sizes.small,
+    width: WINDOW_WIDTH / 2 - sizes.small,
   },
   verticalListImage: {
-    width: SCREEN_WIDTH / 2 - sizes.small,
-    height: SCREEN_WIDTH / 2 - sizes.small,
+    width: WINDOW_WIDTH / 2 - sizes.small,
+    height: WINDOW_WIDTH / 2 - sizes.small,
   },
   verticalListContent: {padding: sizes.small},
   tabItem: {

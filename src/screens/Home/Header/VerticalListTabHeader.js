@@ -11,10 +11,10 @@ import images from '../../../assets/images';
 import Section from '../../../components/Section';
 import colors from '../../../constants/colors';
 import {VERTICAL_LIST_TAB_HEADERS} from '../../../constants/configs';
-import {SCREEN_WIDTH} from '../../../constants/sizes';
+import {WINDOW_WIDTH} from '../../../constants/sizes';
 import strings from '../../../constants/strings';
 import {DailyTabContext} from '../../../contexts/DailyTabContext';
-import {tabCoordinates} from '../coordinates';
+import {storeCoordinates, tabCoordinates} from '../coordinates';
 import styles from '../styles';
 
 function areEqual(prevProps, nextProps) {
@@ -48,7 +48,16 @@ const VerticalListTabHeaderItem = memo(function VerticalListTabHeaderItem({
   );
 
   return (
-    <TouchableWithoutFeedback onPress={onPress}>
+    <TouchableWithoutFeedback
+      onPress={onPress}
+      onLayout={(event) => {
+        const {
+          nativeEvent: {
+            layout: {x, y},
+          },
+        } = event;
+        storeCoordinates(item.id, {x, y});
+      }}>
       <View style={[tabStyle, styles.tabItem]}>
         <Image source={images.shirt} />
         <Text style={{fontSize: 12, textAlign: 'center'}}>{item.name}</Text>
@@ -74,7 +83,7 @@ function VerticalListTabHeader() {
       setTab && setTab(id);
       if (tabCoordinates.hasOwnProperty(id)) {
         const coord = tabCoordinates[id];
-        const offset = Math.floor(SCREEN_WIDTH / 3);
+        const offset = Math.floor(WINDOW_WIDTH / 3);
         const scrollToX = coord.x - offset; // scroll horizontal list to always keep focused tab on viewport
         scrollViewRef.current.scrollTo({
           x: scrollToX,

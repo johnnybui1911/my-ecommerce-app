@@ -4,7 +4,7 @@ import images from '../../../assets/images';
 import HorizontalFlatList from '../../../components/HorizontalFlatList';
 import Section from '../../../components/Section';
 import colors from '../../../constants/colors';
-import {SCREEN_WIDTH} from '../../../constants/sizes';
+import {WINDOW_WIDTH} from '../../../constants/sizes';
 import strings from '../../../constants/strings';
 import DailyItem from './DailyItem';
 
@@ -36,7 +36,7 @@ function DailyBanner() {
     <View style={{paddingHorizontal: 16, backgroundColor: colors.white}}>
       <Image
         source={images.discountBanner}
-        style={{width: SCREEN_WIDTH - 16 * 2}}
+        style={{width: WINDOW_WIDTH - 16 * 2}}
       />
       <Section
         title={strings.home.sections.dailyDetal}
